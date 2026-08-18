@@ -1,26 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Get-it</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get-it</title>
+  <link rel="stylesheet" href="{{{{ url_for('static', filename='css/style.css') }}}}">
 </head>
 <body>
+  <main class="container">
+    <header class="page-header">
+      <img class="logo" src="{{{{ url_for('static', filename='img/logo-getit.png') }}}}" alt="Logo Get-it">
+      <p>Como o Post-it, mas com outro verbo</p>
+    </header>
 
-<img src="{{{{ url_for('static', filename='img/logo-getit.png') }}}}">
-<p>Como o Post-it, mas com outro verbo</p>
-<form action="/submit" method="POST">
-    <label for="titulo">Título</label>
-    <input id="titulo" type="text" name="titulo" />
-    <label for="detalhes">Detalhes</label>
-    <input id="detalhes" name="detalhes" />
-    <input type="submit" />
-  </form>
+    <section class="new-note" aria-labelledby="new-note-title">
+      <h1 id="new-note-title">Nova anotação</h1>
+      <form action="/submit" method="POST">
+        <label for="titulo">Título</label>
+        <input id="titulo" type="text" name="titulo" placeholder="Digite um título" required>
 
+        <label for="detalhes">Detalhes</label>
+        <textarea id="detalhes" name="detalhes" rows="4" placeholder="Escreva os detalhes" required></textarea>
 
-<ul>
-{notes}
-</ul>
+        <button type="submit">Criar anotação</button>
+      </form>
+    </section>
 
+    <section class="notes-section" aria-labelledby="notes-title">
+      <h2 id="notes-title">Minhas anotações</h2>
+      <ul class="notes-list">
+        {notes}
+      </ul>
+    </section>
+  </main>
 </body>
-
 </html>
