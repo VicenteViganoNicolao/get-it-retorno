@@ -1,11 +1,15 @@
-from utils import add_note, load_data, load_template
+from utils import add_note, delete_note, load_data, load_template
 
 def index():
   # Cria uma lista de <li>'s para cada anotação
   # Se tiver curiosidade: https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions
   notes_li = []
   for dados in load_data('notes.json'):
-    note_li = load_template('components/note.html').format(title=dados['titulo'], details=dados['detalhes'])
+    note_li = load_template('components/note.html').format(
+      id=dados['id'],
+      title=dados['titulo'],
+      details=dados['detalhes'],
+    )
     notes_li.append(note_li)
   notes = '\n'.join(notes_li)
 
@@ -19,3 +23,6 @@ def submit(titulo, detalhes):
     'detalhes': detalhes,
   }
   add_note(params)
+
+def delete(note_id):
+  delete_note(note_id)

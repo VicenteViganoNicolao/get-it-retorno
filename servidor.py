@@ -40,10 +40,16 @@ def index():
 @app.route('/submit', methods=['GET', 'POST'])
 def submit_form():
     if request.method == 'POST':
-        titulo = request.form.get('titulo')  # Obtém o valor do campo 'titulo'
-        detalhes = request.form.get('detalhes')  # Obtém o valor do campo 'detalhes'
+        titulo = request.form.get('titulo')
+        detalhes = request.form.get('detalhes')
 
         views.submit(titulo, detalhes)
+    return redirect('/')
+
+
+@app.route('/delete/<int:note_id>')
+def delete_note(note_id):
+    views.delete(note_id)
     return redirect('/')
 
 

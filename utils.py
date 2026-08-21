@@ -35,3 +35,11 @@ def add_note(nova_anotacao):
                 "INSERT INTO note (title, content) VALUES (?, ?)",
                 (nova_anotacao["titulo"], nova_anotacao["detalhes"]),
             )
+
+
+def delete_note(note_id):
+    _ensure_database()
+
+    with closing(sqlite3.connect(DATABASE_PATH)) as connection:
+        with connection:
+            connection.execute("DELETE FROM note WHERE id = ?", (note_id,))

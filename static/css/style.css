@@ -87,3 +87,18 @@ button:hover {
 .note-card p {
   overflow-wrap: break-word;
 }
+
+.delete-button {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 6px 10px;
+  color: #ffffff;
+  border: 2px solid #ff6666;
+  border-radius: 4px;
+  background-color: #ff3333;
+  text-decoration: none;
+}
+
+.delete-button:hover {
+  background-color: #d60000;
+}
