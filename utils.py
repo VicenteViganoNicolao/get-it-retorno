@@ -1,27 +1,20 @@
 import sqlite3
 from contextlib import closing
-from pathlib import Path
+
+from createdb import DATABASE_PATH, create_database
 
 
-DATABASE_PATH = Path(__file__).resolve().parent / "banco.db"
-
-
-def _create_note_table(connection):
-    connection.execute("""
-        CREATE TABLE IF NOT EXISTS note (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT NOT NULL,
-            content TEXT NOT NULL
-        )
-    """)
+def _ensure_database():
+    if not DATABASE_PATH.exists():
+        create_database()
 
 def load_data(nome_arquivo):
+    _ensure_database()
+
     with closing(sqlite3.connect(DATABASE_PATH)) as connection:
-        with connection:
-            _create_note_table(connection)
-            rows = connection.execute(
-                "SELECT id, title, content FROM note ORDER BY id"
-            ).fetchall()
+        rows = connection.execute(
+            "SELECT id, title, content FROM note ORDER BY id"
+        ).fetchall()
 
     return [
         {"id": note_id, "titulo": title, "detalhes": content}
@@ -34,9 +27,10 @@ def load_template(nome_template):
         return template_file.read()
 
 def add_note(nova_anotacao):
+    _ensure_database()
+
     with closing(sqlite3.connect(DATABASE_PATH)) as connection:
         with connection:
-            _create_note_table(connection)
             connection.execute(
                 "INSERT INTO note (title, content) VALUES (?, ?)",
                 (nova_anotacao["titulo"], nova_anotacao["detalhes"]),
