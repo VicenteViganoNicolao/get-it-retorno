@@ -37,12 +37,13 @@ app.static_folder = 'static'
 def index():
   return render_template_string(views.index())
 
-@app.route('/submit', methods=['POST'])
+@app.route('/submit', methods=['GET', 'POST'])
 def submit_form():
-    titulo = request.form.get('titulo')  # Obtém o valor do campo 'titulo'
-    detalhes = request.form.get('detalhes')  # Obtém o valor do campo 'detalhes'
+    if request.method == 'POST':
+        titulo = request.form.get('titulo')  # Obtém o valor do campo 'titulo'
+        detalhes = request.form.get('detalhes')  # Obtém o valor do campo 'detalhes'
 
-    views.submit(titulo, detalhes)
+        views.submit(titulo, detalhes)
     return redirect('/')
 
 
